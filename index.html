@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+
+<audio controls loop id="songplayer" src="audio/easy.mp3"></audio>
+
+<body class="noselect">
+
+<div class="container">
+	<!-- Tutorial Page-->
+	<div id="tutorialpage">
+		<h2 id="finalscoredisplay">Cirno's Math Class!</h2>
+
+		<div id="tutorialcontainer">
+			<div id="retrybuttonscontainer" class="row">
+				<div class="col-xs-6">
+					<div id="easymode" class="retrybuttonsstyle">Easy</div>
+				</div>
+				<div class="col-xs-6">
+					<div id="lunaticmode" class="retrybuttonsstyle">Lunatic</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- End Tutorial Page-->
+
+	<!-- Start Trivia Page-->
+	<div id="triviapage">
+		<!-- Question -->
+		<h2 id="questiondisplay">Cirno's Math Class ⑨</h2>
+		<!-- Answers -->
+		<div id="answerscontainer">
+			<div class="row">
+				<div id="answer1" class="answers col-xs-12">Answer One</div></div>
+			<div class="row">
+				<div id="answer2" class="answers col-xs-12">Answer Two</div></div>
+			<div class="row">
+				<div id="answer3" class="answers col-xs-12">Answer Three</div></div>
+			<div class="row">
+				<div id="answer4" class="answers col-xs-12">Answer Four</div></div>
+		<!-- Score Timer Lives-->
+			<div class="row">
+				<div class="col-xs-4">
+					<div class="scorelivesstyle">Score</div>
+					<div id="scoredisplay" class="scorelivesstyle">0</div>
+				</div>
+				
+				<div class="col-xs-4">
+					<div id="timerdisplay">9</div>
+				</div>
+				
+				<div class="col-xs-4">
+					<div class="scorelivesstyle">Lives</div>
+					<div id="livesdisplay" class="scorelivesstyle">3</div>
+				</div>
+			</div>
+		<!-- Retry Buttons -->
+
+		</div>
+
+	</div>
+	<!-- End Trivia Page -->
+
+</div>
+
+<!-- Test Buttons -->
+<!-- <div class="container">
+	<button id="newquestion">New Question</button>
+	<button id="newquestionlunatic">Lunatic</button>
+</div> -->
+
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="questions.js"></script>
+<script type="text/javascript" src="script.js"></script>
+</html>
