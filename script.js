@@ -15,6 +15,7 @@ random = 0;
 oldrandom=100;
 currentQuestion = {};
 
+var sndEasy = new Audio('audio/easy.mp3')
 var sndCorrect = new Audio('audio/correct.wav');
 var sndIncorrect = new Audio('audio/incorrect.wav');
 var sndGameOver = new Audio('audio/gameover.wav');
@@ -27,20 +28,61 @@ $('.answers').click(function(){
 	if ($(this).attr("id") === currentQuestion.a) {
 		score++;
 		updateNumbers();
-		newQuestion();
 		sndCorrect.play();
+		if(lunatic) {
+			newQuestionLunatic();
+		}
+		else {
+			newQuestion();
+		}
+
 	}
 	else if (lives>1) {
 		lives--;
 		updateNumbers();
-		$(this).css("visibility", "hidden");
 		sndIncorrect.play();
+		$(this).css("visibility", "hidden");
 	}
 	else {
 		lives--;
-		$(this).css("visibility", "hidden");
-		gameOver();
-	}
+		updateNumbers();
+		sndIncorrect.play();
+		if(currentQuestion.a === 'answer1'){
+			$('.answers').hide();
+			$('#answer1right').show();
+			$('#answer2wrong').show();
+			$('#answer3wrong').show();
+			$('#answer4wrong').show();
+		}
+		else if(currentQuestion.a === 'answer2'){
+			$('.answers').hide();
+			$('#answer1wrong').show();
+			$('#answer2right').show();
+			$('#answer3wrong').show();
+			$('#answer4wrong').show();
+		}
+		else if(currentQuestion.a === 'answer3'){
+			$('.answers').hide();
+			$('#answer1wrong').show();
+			$('#answer2wrong').show();
+			$('#answer3right').show();
+			$('#answer4wrong').show();
+		}
+		else if(currentQuestion.a === 'answer4'){
+			$('.answers').hide();
+			$('#answer1wrong').show();
+			$('#answer2wrong').show();
+			$('#answer3wrong').show();
+			$('#answer4right').show();
+		}
+		stopwatch.reset();
+		setTimeout(gameOver,3000);
+	}	
+	// else {
+	// 	lives--;
+	// 	$(this).css("visibility", "hidden");
+	// 	gameOver();
+	// }
 });
 
 $('#tutorialpage').click(function(){
@@ -72,6 +114,12 @@ function newGameEasy(){
   		audioElement.setAttribute("src", "audio/easy.mp3");
 		$('#songplayer').get(0).play();
 		newQuestion();
+
+		// Used to empty Video
+		$('#videocontainer').empty();
+		$('.noselect').css("background-color","");
+		$('.formulabox').css('color', 'blue');
+		document.getElementById("tutorialcontainer").style.backgroundImage="url('images/cirno.gif')";
 	}
 	else {
 		newQuestion();
@@ -84,11 +132,19 @@ function newGameLunatic(){
 	}
 	else {
 		lunatic = true;
-		// $('#songplayer').attr("src", "audio/lunatic.mp3");
-		document.getElementById("answerscontainer").style.backgroundImage="url('images/cirnolunatic.gif')";
-		var audioElement = document.getElementById("songplayer");
-  		audioElement.setAttribute("src", "audio/lunatic.mp3");
-  		$('#songplayer').get(0).play();
+		// Swap Background and Music
+		// document.getElementById("answerscontainer").style.backgroundImage="url('images/cirnolunatic.gif')";
+		// var audioElement = document.getElementById("songplayer");
+  		// audioElement.setAttribute("src", "audio/lunatic.mp3");
+  		// $('#songplayer').get(0).play();
+
+  		// Swap to Video
+  		document.getElementById("answerscontainer").style.backgroundImage="url('')";
+  		document.getElementById("tutorialcontainer").style.backgroundImage="url('')";
+  		$('.formulabox').css('color', 'white');
+  		$('.noselect').css("background-color","#1D181B");
+  		$('#songplayer').get(0).pause();
+  		$('#videocontainer').append('<video id="cirnomathclass" autoplay loop><source src="media/cirnomathclass.mp4" type="video/mp4"></video>');
   		newQuestionLunatic();
 	}
 }
@@ -105,11 +161,24 @@ function newQuestion(){
 	else {
 		currentQuestion = questions[random];
 		$('#questiondisplay').text(questions[random].q);
+		$('#questiondisplay').hide();
+		$('#questiondisplay').show();
 		$('#answer1').text(questions[random].a1);
 		$('#answer2').text(questions[random].a2);
 		$('#answer3').text(questions[random].a3);
 		$('#answer4').text(questions[random].a4);
+		$('#answer1right').text(lunaticquestions[random].a1);
+		$('#answer2right').text(lunaticquestions[random].a2);
+		$('#answer3right').text(lunaticquestions[random].a3);
+		$('#answer4right').text(lunaticquestions[random].a4);
+		$('#answer1wrong').text(lunaticquestions[random].a1);
+		$('#answer2wrong').text(lunaticquestions[random].a2);
+		$('#answer3wrong').text(lunaticquestions[random].a3);
+		$('#answer4wrong').text(lunaticquestions[random].a4);
 		// $('#questiondisplay').css("visibility", "visible")
+		$('.answers').show();
+		$('.answersright').hide();
+		$('.answerswrong').hide();
 		$('.answers').css("visibility", "visible");
 		stopwatch.reset();
 		stopwatch.start();
@@ -121,7 +190,7 @@ function newQuestionLunatic(){
 	$('#tutorialpage').hide();
 	$('#triviapage').show();
 	random = Math.floor(Math.random()*lunaticquestions.length);
-	console.log(random);
+	console.log('lunatic question: '+random);
 	// $('#retrybuttonscontainer').hide();
 	if (random===oldrandom) {
 		newQuestionLunatic();
@@ -133,7 +202,18 @@ function newQuestionLunatic(){
 		$('#answer2').text(lunaticquestions[random].a2);
 		$('#answer3').text(lunaticquestions[random].a3);
 		$('#answer4').text(lunaticquestions[random].a4);
+		$('#answer1right').text(lunaticquestions[random].a1);
+		$('#answer2right').text(lunaticquestions[random].a2);
+		$('#answer3right').text(lunaticquestions[random].a3);
+		$('#answer4right').text(lunaticquestions[random].a4);
+		$('#answer1wrong').text(lunaticquestions[random].a1);
+		$('#answer2wrong').text(lunaticquestions[random].a2);
+		$('#answer3wrong').text(lunaticquestions[random].a3);
+		$('#answer4wrong').text(lunaticquestions[random].a4);
 		// $('#questiondisplay').css("visibility", "visible")
+		$('.answers').show();
+		$('.answersright').hide();
+		$('.answerswrong').hide();
 		$('.answers').css("visibility", "visible");
 		stopwatch.reset();
 		stopwatch.start();
@@ -147,12 +227,11 @@ var stopwatch = {
 		
 		updateNumbers();
 		timerRunning = true;
-        console.log('start');
-        	if (!lunatic) {
-        		intervalId = setInterval(stopwatch.count, 1000);
+           	if (!lunatic) {
+        		intervalId = setInterval(stopwatch.count, 999);
         	}
         	if (lunatic) {
-        		intervalId = setInterval(stopwatch.count, 500);
+        		intervalId = setInterval(stopwatch.count, 666);
         	}
     	}
     },
@@ -168,17 +247,75 @@ var stopwatch = {
     		sndIncorrect.play();
     		stopwatch.reset();
     		updateNumbers();
-	    		if(!lunatic){
-	    			newQuestion();
-	    		}
-	    		if(lunatic){
-	    			newQuestionLunatic();
-	    		}
+	    		if(currentQuestion.a === 'answer1'){
+					$('.answers').hide();
+					$('#answer1right').show();
+					$('#answer2wrong').show();
+					$('#answer3wrong').show();
+					$('#answer4wrong').show();
+				}
+				else if(currentQuestion.a === 'answer2'){
+					$('.answers').hide();
+					$('#answer1wrong').show();
+					$('#answer2right').show();
+					$('#answer3wrong').show();
+					$('#answer4wrong').show();
+				}
+				else if(currentQuestion.a === 'answer3'){
+					$('.answers').hide();
+					$('#answer1wrong').show();
+					$('#answer2wrong').show();
+					$('#answer3right').show();
+					$('#answer4wrong').show();
+				}
+				else if(currentQuestion.a === 'answer4'){
+					$('.answers').hide();
+					$('#answer1wrong').show();
+					$('#answer2wrong').show();
+					$('#answer3wrong').show();
+					$('#answer4right').show();
+				}
+		    	if(lunatic){
+		    			setTimeout(newQuestionLunatic,3000);
+		    	}
+		 		else{
+		    			setTimeout(newQuestion,3000);
+		    	}
     		}
 		else {
-			sndIncorrect.play();
 			lives--;
-    		gameOver();
+			sndIncorrect.play();
+			updateNumbers();
+			if(currentQuestion.a === 'answer1'){
+				$('.answers').hide();
+				$('#answer1right').show();
+				$('#answer2wrong').show();
+				$('#answer3wrong').show();
+				$('#answer4wrong').show();
+			}
+			else if(currentQuestion.a === 'answer2'){
+				$('.answers').hide();
+				$('#answer1wrong').show();
+				$('#answer2right').show();
+				$('#answer3wrong').show();
+				$('#answer4wrong').show();
+			}
+			else if(currentQuestion.a === 'answer3'){
+				$('.answers').hide();
+				$('#answer1wrong').show();
+				$('#answer2wrong').show();
+				$('#answer3right').show();
+				$('#answer4wrong').show();
+			}
+			else if(currentQuestion.a === 'answer4'){
+				$('.answers').hide();
+				$('#answer1wrong').show();
+				$('#answer2wrong').show();
+				$('#answer3wrong').show();
+				$('#answer4right').show();
+			}
+			stopwatch.reset();
+			setTimeout(gameOver,3000);
 		}
     	},
 
