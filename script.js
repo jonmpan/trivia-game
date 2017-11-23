@@ -21,6 +21,7 @@ var sndIncorrect = new Audio('audio/incorrect.wav');
 var sndGameOver = new Audio('audio/gameover.wav');
 var sndEasyStart = new Audio('audio/easystart.wav');
 var sndLunaticStart = new Audio('audio/lunaticstart.wav');
+var loadVideo = new Video('media/cirnomathclass.mp4');
 
 $('#songplayer').get(0).play();
 
@@ -102,7 +103,7 @@ $('#easymode').click(function(){
 });
 
 $('#lunaticmode').click(function(){
-	sndLunaticStart.play();
+	sndEasyStart.play();
 	newGameLunatic();
 });
 
