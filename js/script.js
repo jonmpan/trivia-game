@@ -190,7 +190,8 @@ function newQuestionLunatic(){
 	$('#tutorialpage').hide();
 	$('#triviapage').show();
 	random = Math.floor(Math.random()*lunaticquestions.length);
-	console.log('lunatic question: '+random);
+	var consolerandom = random+1;
+	console.log('lunatic question: '+consolerandom);
 	// $('#retrybuttonscontainer').hide();
 	if (random===oldrandom) {
 		newQuestionLunatic();
